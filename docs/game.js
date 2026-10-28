@@ -85,9 +85,18 @@ function makeStars() {
   return stars;
 }
 function pickTarget(planets, cur) {
+  // on annonce une couleur, puis on fait apparaître plusieurs planètes
+  // de cette couleur dans la suite : l'annonce façonne le champ visible
+  const hue = HUES[Math.floor(Math.random() * HUES.length)];
   const up = planets.slice(cur + 1, cur + 5);
-  if (up.length === 0) return HUES[Math.floor(Math.random() * HUES.length)];
-  return up[Math.floor(Math.random() * up.length)].hue;
+  let matches = up.filter(p => p.hue === hue).length;
+  const changeable = up.filter(p => p.hue !== hue);
+  while (matches < 2 && changeable.length > 0) {
+    const p = changeable.splice(Math.floor(Math.random() * changeable.length), 1)[0];
+    p.hue = hue;
+    matches++;
+  }
+  return hue;
 }
 function hexToRgba(hex, a) {
   const h = hex.replace("#", "");
