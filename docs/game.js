@@ -175,7 +175,7 @@ function makeAudio() {
     }
   };
 }
-export default function App() {
+function App() {
   const canvasRef = useRef(null);
   const [phase, setPhase] = useState("menu");
   const [hud, setHud] = useState({
