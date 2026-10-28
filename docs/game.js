@@ -18,22 +18,22 @@ const HUES = ["#f59e0b", "#38bdf8", "#a78bfa", "#34d399", "#fb7185", "#facc15"];
 
 // Secteurs : l'ambiance change au fil de la progression
 const SECTORS = [{
-  name: "CEINTURE CENDRE",
+  name: "ASH BELT",
   tint: "rgba(99,102,241,0.10)"
 }, {
-  name: "NUÉE CORAIL",
+  name: "CORAL SWARM",
   tint: "rgba(236,72,153,0.12)"
 }, {
-  name: "MER TURQUOISE",
+  name: "TURQUOISE SEA",
   tint: "rgba(45,212,191,0.12)"
 }, {
-  name: "CŒUR AMBRE",
+  name: "AMBER CORE",
   tint: "rgba(245,158,11,0.13)"
 }, {
-  name: "ABYSSE ÉMERAUDE",
+  name: "EMERALD ABYSS",
   tint: "rgba(52,211,153,0.13)"
 }, {
-  name: "AU-DELÀ",
+  name: "THE BEYOND",
   tint: "rgba(167,139,250,0.15)"
 }];
 function rand(a, b) {
@@ -435,7 +435,7 @@ function App() {
       s.popups.push({
         x: p.x,
         y: p.y - p.r - 24,
-        text: perfect ? `+${gain} PARFAIT` : `+${gain}`,
+        text: perfect ? `+${gain} PERFECT` : `+${gain}`,
         life: 1.2,
         color: perfect ? "#fbbf24" : "#e2e8f0"
       });
@@ -447,7 +447,7 @@ function App() {
         s.popups.push({
           x: p.x,
           y: p.y - p.r - 40,
-          text: "ÉCLAIR +2",
+          text: "FLASH +2",
           life: 1.3,
           color: "#22d3ee"
         });
@@ -457,7 +457,7 @@ function App() {
         s.popups.push({
           x: p.x,
           y: p.y - p.r - 40,
-          text: "VIF +1",
+          text: "QUICK +1",
           life: 1.2,
           color: "#38bdf8"
         });
@@ -470,7 +470,7 @@ function App() {
         s.popups.push({
           x: p.x,
           y: p.y - p.r - 56,
-          text: "CIBLE +5",
+          text: "TARGET +5",
           life: 1.4,
           color: p.hue
         });
@@ -495,7 +495,7 @@ function App() {
         s.popups.push({
           x: s.px,
           y: s.py - 18,
-          text: "FRÔLÉ +1",
+          text: "GRAZE +1",
           life: 1.1,
           color: "#f472b6"
         });
@@ -681,7 +681,7 @@ function App() {
             s.popups.push({
               x: p.x,
               y: p.y - p.r - 24,
-              text: "BOUCLIER !",
+              text: "SHIELD!",
               life: 1.2,
               color: "#22d3ee"
             });
@@ -753,7 +753,7 @@ function App() {
               s.popups.push({
                 x: pk.x,
                 y: pk.y - 14,
-                text: "BOUCLIER",
+                text: "SHIELD",
                 life: 1.4,
                 color: "#22d3ee"
               });
@@ -1154,7 +1154,7 @@ function App() {
         ctx.globalAlpha = Math.min(1, s.perfectT);
         ctx.fillStyle = "#fbbf24";
         ctx.font = "bold 16px sans-serif";
-        ctx.fillText("PARFAIT ×" + s.combo, W / 2, 104);
+        ctx.fillText("PERFECT ×" + s.combo, W / 2, 104);
         ctx.globalAlpha = 1;
       }
       // bannière de secteur
@@ -1163,7 +1163,7 @@ function App() {
         ctx.globalAlpha = a;
         ctx.fillStyle = "#94a3b8";
         ctx.font = "bold 13px sans-serif";
-        ctx.fillText("— SECTEUR —", W / 2, 68);
+        ctx.fillText("— SECTOR —", W / 2, 68);
         ctx.fillStyle = "#e2e8f0";
         ctx.font = "bold 20px sans-serif";
         ctx.fillText(s.banner, W / 2, 92);
@@ -1229,7 +1229,7 @@ function App() {
     className: "bg-gradient-to-r from-amber-300 via-sky-300 to-pink-300 bg-clip-text text-3xl font-black tracking-[0.2em] text-transparent drop-shadow-[0_0_12px_rgba(56,189,248,0.4)]"
   }, "ORBITE"), /*#__PURE__*/React.createElement("p", {
     className: "text-xs text-white/50"
-  }, "L\xE2che au bon moment. Ne t'arr\xEAte jamais.")), /*#__PURE__*/React.createElement("div", {
+  }, "Release at the right moment. Never stop.")), /*#__PURE__*/React.createElement("div", {
     className: "flex gap-2"
   }, /*#__PURE__*/React.createElement("span", {
     className: "flex items-center gap-1.5 rounded-xl bg-white/5 px-3 py-1.5 text-sm font-semibold text-white/80 ring-1 ring-inset ring-white/15 backdrop-blur-sm"
@@ -1239,7 +1239,7 @@ function App() {
       background: hud.target,
       boxShadow: `0 0 8px ${hud.target}`
     }
-  }), "cible +5"), /*#__PURE__*/React.createElement("span", {
+  }), "target +5"), /*#__PURE__*/React.createElement("span", {
     className: "rounded-xl bg-white/5 px-3 py-1.5 text-sm font-semibold text-sky-300 ring-1 ring-inset ring-sky-400/30 backdrop-blur-sm"
   }, hud.score, " pts"), hud.combo > 0 && /*#__PURE__*/React.createElement("span", {
     className: "rounded-xl bg-amber-400/10 px-3 py-1.5 text-sm font-semibold text-amber-300 ring-1 ring-inset ring-amber-400/40 backdrop-blur-sm"
@@ -1261,51 +1261,51 @@ function App() {
     className: "text-2xl font-bold"
   }, "ORBITE"), /*#__PURE__*/React.createElement("p", {
     className: "max-w-xs text-sm leading-relaxed text-white/70"
-  }, "Tu tournes autour d'une plan\xE8te.", " ", /*#__PURE__*/React.createElement("b", {
+  }, "You're orbiting a planet.", " ", /*#__PURE__*/React.createElement("b", {
     className: "text-white"
-  }, "Tape"), " pour te lancer en ligne droite, tangentiellement. Entre dans le halo de gravit\xE9 d'une autre plan\xE8te pour t'y orbiter."), /*#__PURE__*/React.createElement("p", {
+  }, "Tap"), " to launch in a straight, tangential line. Enter another planet's gravity halo to orbit it."), /*#__PURE__*/React.createElement("p", {
     className: "text-xs text-white/50"
-  }, "\u26A0 Ton orbite se resserre. Vise pr\xE8s de la surface pour un", " ", /*#__PURE__*/React.createElement("b", {
+  }, "\u26A0 Your orbit tightens. Aim close to the surface for a", " ", /*#__PURE__*/React.createElement("b", {
     className: "text-amber-300"
-  }, "PARFAIT"), " (\xD72, combo). Pars avant 1 tour complet :", " ", /*#__PURE__*/React.createElement("b", {
+  }, "PERFECT"), " (\xD72, combo). Leave before 1 full lap:", " ", /*#__PURE__*/React.createElement("b", {
     className: "text-sky-300"
-  }, "\xC9CLAIR"), " +2. Attrape la plan\xE8te de la ", /*#__PURE__*/React.createElement("b", {
+  }, "FLASH"), " +2. Catch the", " ", /*#__PURE__*/React.createElement("b", {
     className: "text-amber-300"
-  }, "couleur cible"), " : +5."), /*#__PURE__*/React.createElement("button", {
+  }, "target-color"), " planet: +5."), /*#__PURE__*/React.createElement("button", {
     onClick: start,
     className: "mt-2 rounded-full bg-gradient-to-r from-amber-400 to-sky-400 px-8 py-3 text-base font-bold text-slate-900 shadow-lg transition hover:scale-105 active:scale-95"
-  }, "LANCER"), hud.best > 0 && /*#__PURE__*/React.createElement("p", {
+  }, "PLAY"), hud.best > 0 && /*#__PURE__*/React.createElement("p", {
     className: "text-xs text-white/50"
-  }, "Record :", " ", /*#__PURE__*/React.createElement("b", {
+  }, "Best:", " ", /*#__PURE__*/React.createElement("b", {
     className: "text-amber-300"
-  }, hud.best, " plan\xE8tes"))), phase === "over" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+  }, hud.best, " planets"))), phase === "over" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "text-4xl"
   }, "\uD83C\uDF0C"), /*#__PURE__*/React.createElement("h2", {
     className: "text-2xl font-bold"
-  }, "Perdu dans l'espace"), /*#__PURE__*/React.createElement("p", {
+  }, "Lost in space"), /*#__PURE__*/React.createElement("p", {
     className: "text-4xl font-black text-amber-300"
   }, hud.score), /*#__PURE__*/React.createElement("p", {
     className: "text-sm text-white/60"
-  }, "Record :", " ", /*#__PURE__*/React.createElement("b", {
+  }, "Best:", " ", /*#__PURE__*/React.createElement("b", {
     className: "text-amber-300"
-  }, hud.best, " plan\xE8tes")), /*#__PURE__*/React.createElement("button", {
+  }, hud.best, " planets")), /*#__PURE__*/React.createElement("button", {
     onClick: () => setAd(3),
     className: "mt-2 rounded-full bg-gradient-to-r from-emerald-400 to-cyan-400 px-6 py-2.5 text-sm font-bold text-slate-900 shadow-lg transition hover:scale-105 active:scale-95"
-  }, "\u25B6 Regarder une pub \xB7 reprendre avec 1 bouclier"), /*#__PURE__*/React.createElement("button", {
+  }, "\u25B6 Watch an ad \xB7 continue with 1 shield"), /*#__PURE__*/React.createElement("button", {
     onClick: () => start(false),
     className: "rounded-full bg-gradient-to-r from-amber-400 to-sky-400 px-8 py-3 text-base font-bold text-slate-900 shadow-lg transition hover:scale-105 active:scale-95"
-  }, "REJOUER"), /*#__PURE__*/React.createElement("p", {
+  }, "REPLAY"), /*#__PURE__*/React.createElement("p", {
     className: "max-w-xs text-[10px] leading-relaxed text-white/30"
-  }, "Prototype : la pub est simul\xE9e (compte \xE0 rebours). Dans la version publi\xE9e, l'emplacement appelle le SDK du portail (vid\xE9o r\xE9compens\xE9e).")), ad > 0 && /*#__PURE__*/React.createElement("div", {
+  }, "Prototype: the ad is simulated (countdown). In the published version, this slot calls the portal's SDK (rewarded video).")), ad > 0 && /*#__PURE__*/React.createElement("div", {
     className: "absolute inset-0 flex flex-col items-center justify-center gap-3 bg-slate-950/95 text-center"
   }, /*#__PURE__*/React.createElement("p", {
     className: "text-xs uppercase tracking-widest text-white/40"
-  }, "Emplacement publicitaire \u2014 d\xE9mo"), /*#__PURE__*/React.createElement("div", {
+  }, "Ad slot \u2014 demo"), /*#__PURE__*/React.createElement("div", {
     className: "text-5xl font-black text-white/80"
   }, ad), /*#__PURE__*/React.createElement("p", {
     className: "text-xs text-white/40"
-  }, "(Ici, la vid\xE9o r\xE9compens\xE9e du SDK se joue.)")))), /*#__PURE__*/React.createElement("p", {
+  }, "(The SDK's rewarded video plays here.)")))), /*#__PURE__*/React.createElement("p", {
     className: "text-center text-[11px] leading-relaxed text-white/35"
-  }, "Tape le terrain (ou Espace) pour te lib\xE9rer. La ligne pointill\xE9e montre ta trajectoire si tu tapes maintenant.")));
+  }, "Tap the field (or press Space) to break free. The dashed line shows your trajectory if you tap now.")));
 }
 ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
