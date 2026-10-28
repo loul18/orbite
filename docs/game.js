@@ -84,6 +84,11 @@ function makeStars() {
   }
   return stars;
 }
+function pickTarget(planets, cur) {
+  const up = planets.slice(cur + 1, cur + 5);
+  if (up.length === 0) return HUES[Math.floor(Math.random() * HUES.length)];
+  return up[Math.floor(Math.random() * up.length)].hue;
+}
 function hexToRgba(hex, a) {
   const h = hex.replace("#", "");
   const r = parseInt(h.slice(0, 2), 16);
@@ -181,7 +186,8 @@ function App() {
   const [hud, setHud] = useState({
     score: 0,
     best: 0,
-    combo: 0
+    combo: 0,
+    target: HUES[0]
   });
   const [ad, setAd] = useState(0); // compte à rebours de la fausse pub (prototype)
 
@@ -240,6 +246,7 @@ function App() {
     pulse: 0,
     revAcc: 0,
     launchLaps: 99,
+    targetHue: HUES[0],
     exT: 0,
     camRemX: 0,
     camRemY: 0,
@@ -294,6 +301,7 @@ function App() {
     s.flying = false;
     s.dying = false;
     s.over = false;
+    s.targetHue = pickTarget(s.planets, 0);
     // reprise après pub : on garde le score en cours
     if (!withShield) s.score = 0;
     s.combo = 0;
@@ -325,7 +333,8 @@ function App() {
     setHud(h => ({
       ...h,
       score: withShield ? s.score : 0,
-      combo: 0
+      combo: 0,
+      target: s.targetHue
     }));
     setPhase("play");
   };
@@ -446,6 +455,19 @@ function App() {
       }
       s.revAcc = 0;
       burst(x, y, p.hue, perfect ? 24 : 12, perfect ? 2.6 : 2.2);
+      // bonus couleur cible : atteindre la planète de la couleur demandée
+      if (p.hue === s.targetHue) {
+        s.score += 5;
+        s.popups.push({
+          x: p.x,
+          y: p.y - p.r - 56,
+          text: "CIBLE +5",
+          life: 1.4,
+          color: p.hue
+        });
+        burst(x, y, p.hue, 18, 2.8);
+        s.targetHue = pickTarget(s.planets, idx);
+      }
       s.audio.capture(perfect);
       const cross = dx * s.vy - dy * s.vx;
       s.dir = cross > 0 ? 1 : -1;
@@ -922,6 +944,18 @@ function App() {
       // planètes
       for (let i = 0; i < s.planets.length; i++) {
         drawPlanet(s.planets[i], i === s.cur);
+        // halo "couleur cible" autour des planètes à attraper
+        const tp = s.planets[i];
+        if (tp.hue === s.targetHue && i !== s.cur) {
+          ctx.save();
+          ctx.setLineDash([4, 6]);
+          ctx.lineWidth = 1.5;
+          ctx.strokeStyle = hexToRgba(tp.hue, 0.55 + 0.3 * Math.sin(s.time * 4));
+          ctx.beginPath();
+          ctx.arc(tp.x, tp.y, tp.r + 12, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.restore();
+        }
       }
 
       // orbite courante + visée tangente
@@ -1147,10 +1181,11 @@ function App() {
       if (hudT > 0.12) {
         hudT = 0;
         const s = g.current;
-        setHud(h => s.score !== h.score || s.combo !== h.combo ? {
+        setHud(h => s.score !== h.score || s.combo !== h.combo || s.targetHue !== h.target ? {
           ...h,
           score: s.score,
-          combo: s.combo
+          combo: s.combo,
+          target: s.targetHue
         } : h);
       }
       raf = requestAnimationFrame(loop);
@@ -1188,6 +1223,14 @@ function App() {
   }, "L\xE2che au bon moment. Ne t'arr\xEAte jamais.")), /*#__PURE__*/React.createElement("div", {
     className: "flex gap-2"
   }, /*#__PURE__*/React.createElement("span", {
+    className: "flex items-center gap-1.5 rounded-xl bg-white/5 px-3 py-1.5 text-sm font-semibold text-white/80 ring-1 ring-inset ring-white/15 backdrop-blur-sm"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "inline-block h-3 w-3 rounded-full",
+    style: {
+      background: hud.target,
+      boxShadow: `0 0 8px ${hud.target}`
+    }
+  }), "cible +5"), /*#__PURE__*/React.createElement("span", {
     className: "rounded-xl bg-white/5 px-3 py-1.5 text-sm font-semibold text-sky-300 ring-1 ring-inset ring-sky-400/30 backdrop-blur-sm"
   }, hud.score, " pts"), hud.combo > 0 && /*#__PURE__*/React.createElement("span", {
     className: "rounded-xl bg-amber-400/10 px-3 py-1.5 text-sm font-semibold text-amber-300 ring-1 ring-inset ring-amber-400/40 backdrop-blur-sm"
@@ -1217,7 +1260,9 @@ function App() {
     className: "text-amber-300"
   }, "PARFAIT"), " (\xD72, combo). Pars avant 1 tour complet :", " ", /*#__PURE__*/React.createElement("b", {
     className: "text-sky-300"
-  }, "\xC9CLAIR"), " +2."), /*#__PURE__*/React.createElement("button", {
+  }, "\xC9CLAIR"), " +2. Attrape la plan\xE8te de la ", /*#__PURE__*/React.createElement("b", {
+    className: "text-amber-300"
+  }, "couleur cible"), " : +5."), /*#__PURE__*/React.createElement("button", {
     onClick: start,
     className: "mt-2 rounded-full bg-gradient-to-r from-amber-400 to-sky-400 px-8 py-3 text-base font-bold text-slate-900 shadow-lg transition hover:scale-105 active:scale-95"
   }, "LANCER"), hud.best > 0 && /*#__PURE__*/React.createElement("p", {
